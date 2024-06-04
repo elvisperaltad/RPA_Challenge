@@ -1,6 +1,26 @@
 from robocorp.tasks import task
+from RPA.Browser.Selenium import Selenium
+from RPA.Robocorp.WorkItems import WorkItems
+import json
+from excel import Excel
+#import Web
+from web import WebScraper
+
+    
+browser = Selenium()
+#wi = WorkItems()
+#wi.get_input_work_item() 
+#input_wi = wi.get_work_item_variables()
+
+with open("config_file.json","r") as f:
+    input_wi = json.load(f)
 
 @task
-def minimal_task():
-    message = "Hello"
-    message = message + " World!"
+def main():
+    web = WebScraper()
+    web.open_browser(input_wi)
+    web.search_options(input_wi)
+    web.apply_filters(input_wi['filters'])
+    web.get_data(input_wi)
+
+
