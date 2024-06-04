@@ -8,12 +8,9 @@ from web import WebScraper
 
     
 browser = Selenium()
-#wi = WorkItems()
-#wi.get_input_work_item() 
-#input_wi = wi.get_work_item_variables()
-
-with open("config_file.json","r") as f:
-    input_wi = json.load(f)
+wi = WorkItems()
+wi.get_input_work_item() 
+input_wi = wi.get_work_item_variables()
 
 @task
 def main():
