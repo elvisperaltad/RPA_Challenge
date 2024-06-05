@@ -89,4 +89,5 @@ class WebScraper:
 
         #wait until page has news
         self.browser.wait_until_element_is_visible("tag:h3",20)
+        self.browser.wait_for_condition("return document.readyState == 'complete'",20)
         
