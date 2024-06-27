@@ -5,13 +5,11 @@ import json
 from excel import Excel
 #import Web
 from web import WebScraper
-
     
 browser = Selenium()
 wi = WorkItems()
 wi.get_input_work_item() 
 input_wi = wi.get_work_item_variables()
-
 @task
 def main():
     web = WebScraper()

@@ -26,6 +26,7 @@ class WebScraper:
 
     def search_options(self, input_wi):
 
+        """Browsing the page in search of the news"""
         self.browser.click_button("//button[@data-element='search-button']")
         searchInput = f"//input[@data-element='search-form-input']"
         self.browser.wait_until_element_is_visible(searchInput)
@@ -41,18 +42,21 @@ class WebScraper:
                 title = self.browser.get_webelement("class:promo-title",element).text
                 date = self.browser.get_webelement("class:promo-timestamp",element).text
                 
+                """Try to find the description for this news"""
                 try:
                     description = self.browser.get_webelement("class:promo-description",element).text
                 except:
-                    description = "Not Description"
+                    description = "this new has not Description"
 
+                """Try to find the imagen element for this news"""
                 try:
                     img_element = self.browser.get_webelement("css:img",element)
                     img_src = self.browser.get_element_attribute(img_element,"src")
                     img_filename = f"{title}.png"
                 except:
-                    img_filename = "Not Image"
+                    img_filename = "this new has not Image"
 
+                """Calculate time and if the title and description contains money"""
                 utils = Utils(date)
                 months = utils.calculate_date()
                 money = utils.contains_money(title, 
@@ -73,11 +77,13 @@ class WebScraper:
         self.browser.close_browser()
 
     def apply_filters(self, filters):
-     
+
+        """Opening filter section"""
         self.browser.wait_until_element_is_visible("//button[@class='button see-all-button']",30)
         self.browser.click_button_when_visible("//button[@class='button see-all-button']")
         web_filters = self.browser.get_webelements("xpath://div[@class='checkbox-input']")
         
+        """Applying all filters"""
         for element in web_filters:
             try:
                 filter_text = self.browser.get_webelement("tag:span",element).text
@@ -85,9 +91,9 @@ class WebScraper:
                     self.browser.click_element(element)
                     self.browser.wait_until_element_is_visible("tag:h3",20)  
             except:
-                logger.info(f"Failed to apply fitler{filter_text}")  
+                logger.info(f"Failed to apply fitler{filter_text} , because filter was not found")  
 
-        #wait until page has news
+        """wait until page is full load"""
         self.browser.wait_until_element_is_visible("tag:h3",20)
         self.browser.wait_for_condition("return document.readyState == 'complete'",20)
         
