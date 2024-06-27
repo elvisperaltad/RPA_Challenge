@@ -1,9 +1,7 @@
 from robocorp.tasks import task
 from RPA.Browser.Selenium import Selenium
 from RPA.Robocorp.WorkItems import WorkItems
-import json
 from excel import Excel
-#import Web
 from web import WebScraper
     
 browser = Selenium()
